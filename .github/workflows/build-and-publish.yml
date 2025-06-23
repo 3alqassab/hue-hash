@@ -48,6 +48,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Test
+        run: yarn test
+
       - name: Publish to npm
         run: |
           TAG=$( [[ "${{ github.ref_name }}" == "main" ]] && echo "latest" || echo "dev" )

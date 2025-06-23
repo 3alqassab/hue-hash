@@ -1,12 +1,12 @@
 **Hue-Hash**
 
-A tiny, zero-dependency npm package that turns any input string into a reproducible pastel-friendly hex color based on HSL. By hashing your "salt" and feeding it into three independent PRNG streams, it guarantees consistent, softly muted colors perfect for tags, avatars, charts, and more.
+A tiny, zero-dependency npm package that turns any input into a reproducible pastel-friendly hex color based on HSL. By hashing your "salt" and feeding it into three independent PRNG streams, it guarantees consistent, softly muted colors perfect for tags, avatars, charts, and more.
 
 ---
 
 ## Features
 
-* 🎨 **Consistent Results**: The same input string and options always yield the same color.
+* 🎨 **Consistent Results**: The same input and options always yield the same color.
 * 🌈 **Adjustable Palette**: Global or per-call ranges for hue, saturation, and lightness define your pastel spectrum.
 * ⚙️ **Customizable**: Override defaults per-call via the `options` argument or tweak globals in source.
 * ⚡️ **Zero Dependencies**: Pure TypeScript/JavaScript implementation with no external libraries.
@@ -63,27 +63,28 @@ Or override any subset using the following object-based keys:
 
 * **hue**: `{ min: number, max: number }` — e.g. `{ min: 0, max: 360 }` covers the full wheel or narrower to focus on certain hues.
 * **saturation**: `{ min: number, max: number }` — control how muted vs. vivid the colors are.
-* **lightness**: `{ min: number, max: number }` — control how dark vs. light the pastel shades appear.
+* **lightness**: `{ min: number, max: number }` — control how dark vs. light the shades appear.
 
 ---
 
 ## API
 
-### \`getRandomColor(
+```ts
+getRandomColor(
+  salt: string,
+  options?: Partial<{
+    hue: { min: number; max: number };
+    saturation: { min: number; max: number };
+    lightness: { min: number; max: number };
+  }>
+): string
+```
 
-salt: string,
-options?: Partial<{
-hue: { min: number; max: number };
-saturation: { min: number; max: number };
-lightness: { min: number; max: number };
-}>
-): string\`
-
-Generate a reproducible pastel-leaning hex color from any string, with optional object-based overrides.
+Generate a reproducible hex color from any input, with optional object-based overrides.
 
 * **Parameters**:
 
-  * `salt` (*string*) — The input string to hash for color generation.
+  * `salt` (*any*) — The input to hash for color generation.
   * `options` (*object*, optional) — Partial overrides for `hue`, `saturation`, and `lightness`, each as `{ min, max }`.
 * **Returns**: A hex color string in the format `#rrggbb`.
 
@@ -94,7 +95,7 @@ Generate a reproducible pastel-leaning hex color from any string, with optional 
 ```ts
 import { getRandomColor } from 'hue-hash';
 
-// Focus on green-yellow pastels:
+// Focus on green-yellow colors:
 const greenish = getRandomColor('user-42', {
   hue: { min: 60, max: 120 },
   saturation: { min: 40, max: 70 },
