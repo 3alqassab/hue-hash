@@ -80,13 +80,15 @@ function validateRange(
  * @returns A hex color string in the format '#rrggbb'.
  */
 export function getRandomColor(
-  salt: string,
+  salt: any,
   options: ColorOptions = {}
 ): string {
+	const stringSalt = typeof salt === 'string' ? salt : JSON.stringify(salt);
+
   // three independent seeds so H, S, L vary differently
-  const hueRand = mulberry32(xmur3(`${salt}__hue`)());
-  const satRand = mulberry32(xmur3(`${salt}__sat`)());
-  const lightRand = mulberry32(xmur3(`${salt}__lit`)());
+  const hueRand = mulberry32(xmur3(`${stringSalt}__hue`)());
+  const satRand = mulberry32(xmur3(`${stringSalt}__sat`)());
+  const lightRand = mulberry32(xmur3(`${stringSalt}__lit`)());
 
   const hueMin = validateRange(options.hue?.min ?? HUE_MIN, 0, 360);
   const hueMax =  validateRange(options.hue?.max ?? HUE_MAX, hueMin, 360);
