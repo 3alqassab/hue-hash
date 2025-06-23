@@ -1,0 +1,59 @@
+name: Publish Package to npmjs
+
+on:
+  push:
+    branches:
+      - "**"  # all branches
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm install -g semver
+
+      - name: Bump version
+        id: bump
+        run: |
+          PACKAGE_NAME=$(jq -r .name package.json)
+          LATEST_VERSION=$(npm view "$PACKAGE_NAME" version || echo "0.0.0")
+          echo "Latest version: $LATEST_VERSION"
+          BASE_VERSION=$(semver -i patch "$LATEST_VERSION")
+
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            FINAL_VERSION="$BASE_VERSION"
+          else
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            FINAL_VERSION="${BASE_VERSION}-dev.$SHORT_SHA"
+          fi
+
+          echo "Final version: $FINAL_VERSION"
+          jq ".version = \"$FINAL_VERSION\"" package.json > package.tmp.json
+          mv package.tmp.json package.json
+
+          echo "version=$FINAL_VERSION" >> $GITHUB_OUTPUT
+
+      - run: npm ci
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish to npm
+        run: |
+          TAG=$( [[ "${{ github.ref_name }}" == "main" ]] && echo "latest" || echo "dev" )
+          npm publish --provenance --access public --tag "$TAG"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Output Published Version
+        run: 'echo "📦 Published version: ${{ steps.bump.outputs.version }}"'
