@@ -43,7 +43,7 @@ jobs:
 
           echo "version=$FINAL_VERSION" >> $GITHUB_OUTPUT
 
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn build
