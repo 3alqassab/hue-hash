@@ -1,7 +1,10 @@
+
+
 **Hue-Hash**
 
 A tiny, zero-dependency npm package that turns any input into a reproducible pastel-friendly hex color based on HSL. By hashing your "salt" and feeding it into three independent PRNG streams, it guarantees consistent, softly muted colors perfect for tags, avatars, charts, and more.
 
+[![Publish Package to npmjs](https://github.com/3alqassab/hue-hash/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/3alqassab/hue-hash/actions/workflows/build-and-publish.yml)
 ---
 
 ## Features
