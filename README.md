@@ -74,7 +74,7 @@ Or override any subset using the following object-based keys:
 
 ```ts
 getRandomColor(
-  salt: string,
+  input: any,
   options?: Partial<{
     hue: { min: number; max: number };
     saturation: { min: number; max: number };
@@ -87,7 +87,7 @@ Generate a reproducible hex color from any input, with optional object-based ove
 
 * **Parameters**:
 
-  * `salt` (*any*) — The input to hash for color generation.
+  * `input` (*any*) — The input to hash for color generation.
   * `options` (*object*, optional) — Partial overrides for `hue`, `saturation`, and `lightness`, each as `{ min, max }`.
 * **Returns**: A hex color string in the format `#rrggbb`.
 
@@ -106,7 +106,7 @@ const greenish = getRandomColor('user-42', {
 });
 
 // Only override hue, keep defaults for others:
-const pinkish = getRandomColor('user-43', {
+const pinkish = getRandomColor(43, {
   hue: { min: 300, max: 360 },
 });
 ```
