@@ -27,7 +27,7 @@ Hue-Hash is published as a tiny prebuilt package containing only:
 Verified with `npm pack ./lib --dry-run`:
 
 * **Tarball size**: `1.2 kB`
-* **Unpacked size**: `2.0 kB`
+* **Unpacked size**: `2.1 kB`
 * **Total files shipped**: `3`
 
 ---

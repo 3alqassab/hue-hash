@@ -6,7 +6,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/3alqassab/hue-hash.git"
+		"url": "https://github.com/3alqassab/hue-hash"
 	},
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -26,7 +26,7 @@
 		"clean": "node -e \"require('fs').rmSync('lib', { recursive: true, force: true })\"",
 		"build:types": "tsc --project tsconfig.build.json",
 		"build:js": "esbuild src/index.ts --bundle --format=cjs --platform=neutral --target=es2021 --minify --legal-comments=none --outfile=lib/index.js",
-		"build:manifest": "node -e \"const fs=require('fs');const pkg=require('./package.json');fs.writeFileSync('lib/package.json',JSON.stringify({name:pkg.name,version:pkg.version,main:'index.js',types:'index.d.ts',license:pkg.license,sideEffects:false}));\"",
+		"build:manifest": "node -e \"const fs=require('fs');const pkg=require('./package.json');fs.writeFileSync('lib/package.json',JSON.stringify({name:pkg.name,version:pkg.version,main:'index.js',types:'index.d.ts',license:pkg.license,sideEffects:false,repository:{type:'git',url:pkg.repository.url}},null,2)+'\\n');\"",
 		"build": "yarn clean && yarn build:types && yarn build:js && yarn build:manifest",
 		"test": "jest --config jestconfig.json"
 	},
