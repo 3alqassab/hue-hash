@@ -18,17 +18,18 @@ A tiny, zero-dependency npm package that turns any input into a reproducible pas
 
 ## Package Size
 
-Hue-Hash is published as a tiny prebuilt package containing only:
+Hue-Hash is published as a tiny prebuilt package containing:
 
 * `index.js`
 * `index.d.ts`
 * `package.json`
+* `README.md`
 
 Verified with `npm pack ./lib --dry-run`:
 
-* **Tarball size**: `1.2 kB`
-* **Unpacked size**: `2.1 kB`
-* **Total files shipped**: `3`
+* **Tarball size**: `3.1 kB`
+* **Unpacked size**: `6.2 kB`
+* **Total files shipped**: `4`
 
 ---
 
