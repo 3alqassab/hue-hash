@@ -54,7 +54,7 @@ jobs:
       - name: Publish to npm
         run: |
           TAG=$( [[ "${{ github.ref_name }}" == "main" ]] && echo "latest" || echo "dev" )
-          npm publish --provenance --access public --tag "$TAG"
+          npm publish ./lib --provenance --access public --tag "$TAG"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

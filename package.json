@@ -9,21 +9,36 @@
 		"url": "https://github.com/3alqassab/hue-hash.git"
 	},
 	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./lib/index.d.ts",
+			"require": "./lib/index.js",
+			"default": "./lib/index.js"
+		}
+	},
+	"files": [
+		"lib"
+	],
+	"sideEffects": false,
 	"scripts": {
 		"dev": "tsx watch src/index.ts",
-		"build": "tsc",
+		"clean": "node -e \"require('fs').rmSync('lib', { recursive: true, force: true })\"",
+		"build:types": "tsc --project tsconfig.build.json",
+		"build:js": "esbuild src/index.ts --bundle --format=cjs --platform=neutral --target=es2021 --minify --legal-comments=none --outfile=lib/index.js",
+		"build:manifest": "node -e \"const fs=require('fs');const pkg=require('./package.json');fs.writeFileSync('lib/package.json',JSON.stringify({name:pkg.name,version:pkg.version,main:'index.js',types:'index.d.ts',license:pkg.license,sideEffects:false}));\"",
+		"build": "yarn clean && yarn build:types && yarn build:js && yarn build:manifest",
 		"test": "jest --config jestconfig.json"
 	},
 	"license": "MIT",
 	"dependencies": {},
 	"devDependencies": {
-		"@types/aes-js": "^3.1.1",
+		"esbuild": "^0.25.5",
 		"@types/jest": "^29.4.4",
 		"@types/node": "^18.14.6",
 		"jest": "^29.5.0",
 		"prettier": "^2.8.4",
 		"ts-jest": "^29.0.5",
-		"tsc": "^2.0.4",
 		"tsx": "^3.12.3",
 		"typescript": "^4.9.5"
 	}

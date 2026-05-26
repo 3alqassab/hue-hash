@@ -16,6 +16,22 @@ A tiny, zero-dependency npm package that turns any input into a reproducible pas
 
 ---
 
+## Package Size
+
+Hue-Hash is published as a tiny prebuilt package containing only:
+
+* `index.js`
+* `index.d.ts`
+* `package.json`
+
+Verified with `npm pack ./lib --dry-run`:
+
+* **Tarball size**: `1.2 kB`
+* **Unpacked size**: `2.0 kB`
+* **Total files shipped**: `3`
+
+---
+
 ## Installation
 
 ```bash

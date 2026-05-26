@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"removeComments": true,
+		"allowJs": false
+	},
+	"include": ["src/index.ts"],
+	"exclude": ["src/__test__/**/*", "node_modules", "lib"]
+}
