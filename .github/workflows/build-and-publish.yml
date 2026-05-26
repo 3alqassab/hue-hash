@@ -3,7 +3,11 @@ name: Publish Package to npmjs
 on:
   push:
     branches:
-      - "**"  # all branches
+      - "**" # all branches
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
 
 jobs:
   publish:
@@ -52,11 +56,9 @@ jobs:
         run: yarn test
 
       - name: Publish to npm
-        run: |
-          TAG=$( [[ "${{ github.ref_name }}" == "main" ]] && echo "latest" || echo "dev" )
-          npm publish ./lib --provenance --access public --tag "$TAG"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm install -g npm@latest
+
+      - run: npm publish ./lib --provenance --access public --tag $( [[ "${{ github.ref_name }}" == "main" ]] && echo "latest" || echo "dev" )
 
       - name: Output Published Version
         run: 'echo "📦 Published version: ${{ steps.bump.outputs.version }}"'
